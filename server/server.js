@@ -25,7 +25,7 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
   // set query with firstname and lastname,
   // if get duplicate results, filter it later
   const query = {
-    text: 'SELECT * FROM list WHERE firstname = $1 and lastname = $2',
+    text: 'SELECT address, city, state FROM list WHERE firstname = $1 and lastname = $2',
     values: [firstName, lastName]
   }
   
@@ -35,7 +35,7 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
       // if result contains more than people having the same first and last name,
       // then check the middle name
       const len = res.rows.length;
-
+      console.log(res.rows)
       // if result empty, send 400 code
       if(len === 0) {
         response.status(400).send('Physician Not in Database')
