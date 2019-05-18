@@ -1,0 +1,27 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+.form {
+  display: flex;
+  height: 80px;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+}
+.inputText {
+  margin-left: 15px;
+  height: 20px;
+  width:200px;
+  margin-right: 20px;
+}
+#map {
+  width: 800px;
+  height:400px;
+}
+#demoAddress {
+  margin-top: 30px;
+}
