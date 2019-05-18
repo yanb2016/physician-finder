@@ -24,6 +24,8 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
 
   // set query with firstname and lastname,
   // if get duplicate results, filter it later
+
+  // MAYBE SHOULD ALSO SET MIDDLE AS ONE OF THE CONDITION, IT NOT PROVIDED, JUST USE FIRST AND LAST NAME
   const query = {
     text: 'SELECT address, city, state FROM list WHERE firstname = $1 and lastname = $2',
     values: [firstName, lastName]
@@ -32,15 +34,16 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
   // query physician according to the input name
   client.query(query)
     .then(res => {
-      // if result contains more than people having the same first and last name,
-      // then check the middle name
       const len = res.rows.length;
+      console.log(res.rows)
       // if result empty, send 400 code
       if(len === 0) {
         response.status(400).send('Physician Not in Database')
         throw 400
       }
-      
+      // if result contains more people having the same first and last name,
+      // then check the middle name
+
       if(len > 1) {
         for(let i = 0; i < len; i++) {
           if(res.rows[i].middlename === middleName) {
@@ -48,7 +51,13 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
           }
         }
       }
-      // otherwise, just return the only person
+
+      // WHAT IF PEOPLE HAVE THE SAME MIDDLE NAME ALSE?
+      // RETURN THE FIRST ONE OR RETURN A LIST, THEN LET USER TO CHOOSE
+
+
+      // IF MIDDLE NAME NOT PROVIDED OR JUST ONE RESULT, RETURN THE FIRST ONE
+
       response.json(res.rows[0])
     })
     .catch(e => console.error(e))
@@ -63,13 +72,13 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-// commants for copying csv file to db
-// create table first
-// and then copy csv file to db
-// COPY list(firstname,middlename, lastname, address, city, state) 
-// FROM '/Users/yanbinjin/Downloads/PGYR16_P011819/physician.csv' DELIMITER ',' CSV HEADER;
+  // commants for copying csv file to db
+  // create table first
+  // and then copy csv file to db
+  // COPY list(firstname,middlename, lastname, address, city, state) 
+  // FROM '/Users/yanbinjin/Downloads/PGYR16_P011819/physician.csv' DELIMITER ',' CSV HEADER;
 
-// query adress 
-// SELECT address, city, state FROM list WHERE lastname='Delisi'and firstname='Craig';
+  // query adress 
+  // SELECT address, city, state FROM list WHERE lastname='Delisi'and firstname='Craig';
 
-// SELECT address, city, state FROM list WHERE lastname= "Delisi" and firstname = "Craig";
+  // SELECT address, city, state FROM list WHERE lastname= "Delisi" and firstname = "Craig";
