@@ -35,7 +35,6 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
       // if result contains more than people having the same first and last name,
       // then check the middle name
       const len = res.rows.length;
-      console.log(res.rows)
       // if result empty, send 400 code
       if(len === 0) {
         response.status(400).send('Physician Not in Database')
@@ -55,7 +54,6 @@ app.get('/physician/:firstName/:middleName/:lastName', function(req,response,nex
     .catch(e => console.error(e))
     .finally(() => {
       client.end((err) => {
-        console.log('client has disconnected')
         if (err) {
           response.status(404).send('error during disconnection', err.stack)
         }
