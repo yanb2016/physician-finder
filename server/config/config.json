@@ -1,0 +1,3 @@
+{
+  "mongoDbUri": "mongodb://user:user123@ds157956.mlab.com:57956/physician-finder"
+}

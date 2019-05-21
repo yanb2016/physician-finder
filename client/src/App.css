@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 .form {
   display: flex;
@@ -19,9 +17,9 @@
   margin-right: 20px;
 }
 #map {
-  width: 800px;
-  height:400px;
+  width: 80%;
+  height:500px;
 }
 #demoAddress {
-  margin-top: 30px;
+  margin-bottom: 30px;
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect   } from 'react';
 import './App.css';
 
 function App() {
-
   // use hooks
   const [value, setValue] = useState('');
   // when app initialized, dont show marker,set showMarker to false
@@ -10,7 +9,7 @@ function App() {
   // set initial coordinate in SF
   const [location, setLocation] = useState({lat: 37.7749, lng: -122.4194});
   // for demo
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState('Physician address will display here.')
 
   // init google map
   let google = window.google;
@@ -41,7 +40,7 @@ function App() {
     }
 
     // put parameters in url, carring them to sever side
-    const news_url = `/physician/${firstName}/${middleName}/${lastName}`
+    const news_url = `/v1/physician/${firstName}/${middleName}/${lastName}`
     const request = new Request(news_url, {
       method: 'GET',
     });
@@ -49,7 +48,7 @@ function App() {
       .then(res => {
         // if not found will return 400 code
         if(res.status === 400) {
-          alert('Physician not exists');
+          setAddress('No results matches your research');
           throw 400;
         } else {
           // if found, json()
@@ -58,8 +57,8 @@ function App() {
       })
       .then(res => {
         // call codeAddress to get coordinate
-        codeAddress(res.address, res.city, res.state)
-        setAddress(`${value}'s address is ${res.address}, ${res.city}, ${res.state}`)
+        codeAddress(res.adress, res.city, res.state)
+        setAddress(`${value}'s address is ${res.adress}, ${res.city}, ${res.state}`)
       })
       .catch(err => console.log(err))
   }
@@ -92,8 +91,8 @@ function App() {
         </label>
         <input type="submit" value="Search" />
       </form>
-      <div id="map"></div>
       <div id="demoAddress">{address}</div>
+      <div id="map"></div>
     </div>
   );
 }
