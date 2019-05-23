@@ -25,6 +25,7 @@ router.get('/physician/:firstName/:middleName/:lastName', (req, response) => {
         response.status(400).send('Physician Not in Database')
         return
       }
+      console.log(res)
       if(res.length > 1) {
         for(let i = 0; i < res.length; i++) {
           if(formatMidName.indexOf(res[i].middlename) > -1) {

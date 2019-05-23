@@ -22,7 +22,13 @@ function App() {
     setShowMarker(true)
     getAddress();
   } 
-
+  function formatName(name) {
+    let formatedName = name;
+    for(let i = 0; i < formatedName.length; i++) {
+      formatedName[i] = formatedName[i][0].toUpperCase() + formatedName[i].slice(1).toLowerCase();
+    }
+    return formatedName.join(' ');
+  }
   // add from database
   function getAddress() {
 
@@ -57,8 +63,9 @@ function App() {
       })
       .then(res => {
         // call codeAddress to get coordinate
-        codeAddress(res.adress, res.city, res.state)
-        setAddress(`${value}'s address is ${res.adress}, ${res.city}, ${res.state}`)
+        codeAddress(res.address, res.city, res.state);
+        const formatedName = formatName(name);
+        setAddress(`${formatedName}'s address is ${res.address}, ${res.city}, ${res.state}`)
       })
       .catch(err => console.log(err))
   }
